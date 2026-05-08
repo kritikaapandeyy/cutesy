@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Abhinav 💙</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a0e2a;
+    --navy-mid: #111740;
+    --navy-light: #1a2160;
+    --white: #ffffff;
+    --gold: #f0d080;
+    --blue-accent: #4f7cff;
+    --pink: #ffb3c6;
+  }
+
+  body {
+    background: var(--navy);
+    font-family: 'Quicksand', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Stars */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d, 3s) ease-in-out infinite alternate;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0% { opacity: 0.1; transform: scale(0.8); }
+    100% { opacity: 0.9; transform: scale(1.2); }
+  }
+
+  /* Overlay / Popup */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 8, 30, 0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.4s;
+  }
+  .overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .popup {
+    background: linear-gradient(145deg, #111740, #0d1235);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px;
+    padding: 2.5rem 2.5rem 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 0 60px rgba(79,124,255,0.15), 0 20px 60px rgba(0,0,0,0.6);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .popup-emoji {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .popup h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .popup p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .btn-continue {
+    background: linear-gradient(135deg, #4f7cff, #2a52cc);
+    color: white;
+    border: none;
+    padding: 0.85rem 2.5rem;
+    border-radius: 999px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(79,124,255,0.4);
+  }
+  .btn-continue:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(79,124,255,0.55);
+  }
+
+  /* Main screen */
+  .main-screen {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+    max-width: 680px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .main-screen.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .main-screen .question {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 40px rgba(79,124,255,0.3);
+  }
+  .main-screen .question em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .main-screen .subtitle {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+  }
+
+  .options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #1a2ea8, #4f7cff);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(79,124,255,0.35);
+    position: relative;
+  }
+  .btn-yes:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 28px rgba(79,124,255,0.55);
+  }
+
+  .btn-yes .lang-label {
+    display: block;
+    font-size: 0.65rem;
+    opacity: 0.6;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .btn-no {
+    background: transparent;
+    color: #f5ecd7;
+    border: 1px solid #f5ecd7;
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: transform 0.15s;
+    margin-top: 0.5rem;
+    display: inline-block;
+  }
+
+  /* Success screen */
+  .success-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s;
+    text-align: center;
+    padding: 2rem;
+  }
+  .success-screen.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .bouquet {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    animation: floatBouquet 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255,100,150,0.4));
+  }
+  @keyframes floatBouquet {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-12px) rotate(3deg); }
+  }
+
+  .success-screen h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--white);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .success-screen h1 span { color: var(--gold); }
+
+  .success-screen .note {
+    color: rgba(255,255,255,0.65);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .success-screen .signature {
+    margin-top: 1.5rem;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  /* Confetti */
+  .confetti-piece {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    top: -10px;
+    pointer-events: none;
+    z-index: 300;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* No button dodge */
+  #noBtn { position: relative; }
+
+  /* Lyrics ticker */
+  .lyrics-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    overflow: hidden;
+    padding: 0.75rem 0 1rem;
+    background: linear-gradient(to top, rgba(10,14,42,0.95) 60%, transparent);
+    pointer-events: none;
+  }
+  .lyrics-track {
+    display: flex;
+    gap: 5rem;
+    width: max-content;
+    animation: scrollLyrics 30s linear infinite;
+  }
+  @keyframes scrollLyrics {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .lyrics-track span {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.32);
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+  .lyrics-track span.hl {
+    color: rgba(240,208,128,0.55);
+  }
+</style>
+</head>
+<body>
+
+<!-- Audio -->
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg"/>
+</audio>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+
+<!-- Lyrics ticker -->
+<div class="lyrics-bar">
+  <div class="lyrics-track" id="lyricsTrack"></div>
+</div>
+
+<!-- Popup 1: Oh hi gorgeous -->
+<div class="overlay" id="overlay1">
+  <div class="popup">
+    <span class="popup-emoji">✨</span>
+    <h2>Oh hi, gorgeous.</h2>
+    
+    <button class="btn-continue" onclick="nextPopup()">Continue →</button>
+  </div>
+</div>
+
+<!-- Popup 2: I got a question -->
+<div class="overlay hidden" id="overlay2">
+  <div class="popup">
+    <span class="popup-emoji">💙</span>
+    <h2>I've got a question for you.</h2>
+    
+    <button class="btn-continue" onclick="showMain()">I'm ready →</button>
+  </div>
+</div>
+
+<!-- Main screen -->
+<div class="main-screen" id="mainScreen">
+  <p class="question">Will you be my <em>Boyfriend?</em></p>
+  <p class="subtitle">choose wisely 🌙</p>
+
+  <div class="options-grid">
+    <button class="btn-yes" onclick="sayYes()">
+      Yes
+      <span class="lang-label">English</span>
+    </button>
+    <button class="btn-yes" onclick="sayYes()">
+      ஆமாம்
+      <span class="lang-label">Tamil</span>
+    </button>
+    <button class="btn-yes" onclick="sayYes()">
+      हो
+      <span class="lang-label">Marathi</span>
+    </button>
+    <button class="btn-yes" onclick="sayYes()">
+      Ja
+      <span class="lang-label">German</span>
+    </button>
+  </div>
+
+  <br/>
+  <button class="btn-no" id="noBtn" onmouseover="dodgeNo(this)" ontouchstart="dodgeNo(this)">No</button>
+</div>
+
+<!-- Success screen -->
+<div class="success-screen" id="successScreen">
+  <div class="bouquet">💐</div>
+  <h1>Yay, good choice <span>Abhinav!</span> 💙</h1>
+  <p class="note">
+    You just made me the happiest girl.<br/>
+    Can't wait for all the adventures with you.
+  </p>
+  <p class="signature">— Kritika 🌸</p>
+</div>
+
+<script>
+  // Lyrics ticker
+  const lines = [
+    { text: "You've been hiding in plain sight", hl: true },
+    { text: "And it appeared, oh I know" },
+    { text: "Loving you once only feels wrong" },
+    { text: "I need you" , hl: true },
+    { text: "I always knew I'd find you" },
+    { text: "To be here is worth the wait too" },
+    { text: "I'm not lying" },
+    { text: "When I say I've been stuck", hl: true },
+    { text: "By the glue onto you" , hl: true },
+    { text: "I've been stuck by glue", hl: true },
+    { text: "Right onto you", hl: true },
+    { text: "I've been stuck by glue" },
+  ];
+  const track = document.getElementById('lyricsTrack');
+  // duplicate for seamless loop
+  [0,1].forEach(() => {
+    lines.forEach(l => {
+      const s = document.createElement('span');
+      if (l.hl) s.classList.add('hl');
+      s.textContent = l.text;
+      track.appendChild(s);
+    });
+  });
+
+  // Start music on first interaction
+  const music = document.getElementById('bgMusic');
+  function startMusic() {
+    music.currentTime = 45;
+    music.play().catch(()=>{});
+    document.removeEventListener('click', startMusic);
+  }
+  document.addEventListener('click', startMusic);
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      --d:${(Math.random()*3+2).toFixed(1)}s;
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  function nextPopup() {
+    document.getElementById('overlay1').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('overlay2').classList.remove('hidden');
+    }, 300);
+  }
+
+  function showMain() {
+    document.getElementById('overlay2').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('mainScreen').classList.add('visible');
+    }, 400);
+  }
+
+  function dodgeNo(btn) {
+    const x = (Math.random() - 0.5) * 300;
+    const y = (Math.random() - 0.5) * 200;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+    btn.style.transition = 'transform 0.3s ease';
+  }
+
+  function sayYes() {
+    launchConfetti();
+    setTimeout(() => {
+      document.getElementById('successScreen').classList.add('visible');
+    }, 300);
+  }
+
+  function launchConfetti() {
+    const colors = ['#4f7cff','#f0d080','#ffb3c6','#ffffff','#7eb8ff','#ffd6e8'];
+    for (let i = 0; i < 90; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDuration = (Math.random()*2.5+1.5) + 's';
+        c.style.animationDelay = Math.random()*1 + 's';
+        c.style.width = (Math.random()*8+4) + 'px';
+        c.style.height = (Math.random()*8+4) + 'px';
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
+      }, i * 20);
+    }
+  }
+</script>
+</body>
+</html>
